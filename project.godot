@@ -13,6 +13,14 @@ config_version=4
 config/name="Battlegirls"
 config/icon="res://icon.png"
 
+[display]
+
+window/size/width=480
+window/size/height=270
+window/size/resizable=false
+window/stretch/mode="viewport"
+window/stretch/aspect="keep"
+
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true
