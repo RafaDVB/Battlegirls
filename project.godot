@@ -11,13 +11,15 @@ config_version=4
 [application]
 
 config/name="Battlegirls"
+run/main_scene="res://modules/game/Game.tscn"
 config/icon="res://icon.png"
 
 [display]
 
-window/size/width=480
-window/size/height=270
+window/size/width=1920
+window/size/height=1080
 window/size/resizable=false
+window/size/fullscreen=true
 window/stretch/mode="viewport"
 window/stretch/aspect="keep"
 
