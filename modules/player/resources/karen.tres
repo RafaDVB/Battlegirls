@@ -1,0 +1,48 @@
+[gd_resource type="SpriteFrames" load_steps=19 format=2]
+
+[ext_resource path="res://assets/graphics/sprites/karen/idle/3.png" type="Texture" id=1]
+[ext_resource path="res://assets/graphics/sprites/karen/idle/4.png" type="Texture" id=2]
+[ext_resource path="res://assets/graphics/sprites/karen/idle/1.png" type="Texture" id=3]
+[ext_resource path="res://assets/graphics/sprites/karen/idle/2.png" type="Texture" id=4]
+[ext_resource path="res://assets/graphics/sprites/karen/run/8.png" type="Texture" id=5]
+[ext_resource path="res://assets/graphics/sprites/karen/run/5.png" type="Texture" id=6]
+[ext_resource path="res://assets/graphics/sprites/karen/run/1.png" type="Texture" id=7]
+[ext_resource path="res://assets/graphics/sprites/karen/run/3.png" type="Texture" id=8]
+[ext_resource path="res://assets/graphics/sprites/karen/run/4.png" type="Texture" id=9]
+[ext_resource path="res://assets/graphics/sprites/karen/run/6.png" type="Texture" id=10]
+[ext_resource path="res://assets/graphics/sprites/karen/run/7.png" type="Texture" id=11]
+[ext_resource path="res://assets/graphics/sprites/karen/run/2.png" type="Texture" id=12]
+[ext_resource path="res://assets/graphics/sprites/karen/jump/temp.png" type="Texture" id=13]
+[ext_resource path="res://assets/graphics/sprites/karen/fall/temp.png" type="Texture" id=14]
+[ext_resource path="res://assets/graphics/sprites/karen/jab/1.png" type="Texture" id=15]
+[ext_resource path="res://assets/graphics/sprites/karen/jab/4.png" type="Texture" id=16]
+[ext_resource path="res://assets/graphics/sprites/karen/jab/2.png" type="Texture" id=17]
+[ext_resource path="res://assets/graphics/sprites/karen/jab/3.png" type="Texture" id=18]
+
+[resource]
+animations = [ {
+"frames": [ ExtResource( 14 ) ],
+"loop": true,
+"name": "Fall",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 1 ), ExtResource( 2 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 6.0
+}, {
+"frames": [ ExtResource( 15 ), ExtResource( 17 ), ExtResource( 18 ), ExtResource( 16 ) ],
+"loop": false,
+"name": "Jab",
+"speed": 14.0
+}, {
+"frames": [ ExtResource( 13 ) ],
+"loop": true,
+"name": "Jump",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 9 ), ExtResource( 6 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 5 ), ExtResource( 7 ), ExtResource( 12 ), ExtResource( 8 ) ],
+"loop": true,
+"name": "Run",
+"speed": 12.0
+} ]

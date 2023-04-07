@@ -1,12 +1,49 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://modules/player/resources/karen.tres" type="SpriteFrames" id=1]
+[ext_resource path="res://modules/player/scripts/Player.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 8, 8 )
+extents = Vector2( 8, 16 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 12, 6 )
 
 [node name="Player" type="KinematicBody2D"]
+script = ExtResource( 2 )
 
 [node name="Collision" type="CollisionShape2D" parent="."]
-position = Vector2( 0, -8 )
+position = Vector2( 0, -16 )
 shape = SubResource( 1 )
 
 [node name="Camera" type="Camera2D" parent="."]
+position = Vector2( 0, -40 )
+current = true
+
+[node name="Sprite" type="AnimatedSprite" parent="."]
+position = Vector2( 0, -24 )
+frames = ExtResource( 1 )
+animation = "Jab"
+frame = 3
+playing = true
+
+[node name="Jab" type="Area2D" parent="."]
+monitorable = false
+
+[node name="Collision" type="CollisionShape2D" parent="Jab"]
+position = Vector2( 18, -24 )
+shape = SubResource( 2 )
+
+[node name="InputTimer" type="Timer" parent="."]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Label" type="Label" parent="CanvasLayer/Control"]
+margin_right = 40.0
+margin_bottom = 14.0
+
+[connection signal="timeout" from="InputTimer" to="." method="_on_InputTimer_timeout"]

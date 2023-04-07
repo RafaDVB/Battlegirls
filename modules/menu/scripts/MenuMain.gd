@@ -6,8 +6,21 @@ onready var buttonStart = $UI/VBoxContainer/ButtonStart
 func _ready():
 	buttonStart.grab_focus()
 
+func switch_scene(next_scene_path):
+	var scene_container = get_tree().get_root().get_node("Game/ViewportContainer/Viewport")
+
+	# Clear everything under Viewport
+	for i in range(scene_container.get_child_count()):
+		var child = scene_container.get_child(i)
+		child.queue_free()
+
+	# Load level under viewport
+	var next_level_res = load(next_scene_path)
+	var next_level = next_level_res.instance()
+	scene_container.add_child(next_level)
+
 func _on_ButtonStart_pressed():
-	get_tree().change_scene("res://modules/stages/Stage1.tscn")
+	switch_scene("res://modules/stages/Stage1.tscn")
 
 func _on_ButtonSelect_pressed():
 	#get_tree().change_scene("")
