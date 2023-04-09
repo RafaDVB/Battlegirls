@@ -89,6 +89,13 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("Attack"):
 		attack()
 
+	if Input.is_action_pressed("Up"):
+		camera.offset.y = lerp(camera.offset.y, -50, delta * 2)
+	elif Input.is_action_pressed("Down"):
+		camera.offset.y = lerp(camera.offset.y, 50, delta * 2)
+	else:
+		camera.offset.y = lerp(camera.offset.y, 0, delta * 2)
+
 	passThrough = Input.is_action_pressed("Down")
 
 	if is_on_floor():
