@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://modules/player/resources/karen.tres" type="SpriteFrames" id=1]
 [ext_resource path="res://modules/player/scripts/Player.gd" type="Script" id=2]
+[ext_resource path="res://modules/ui/Statusbar.tscn" type="PackedScene" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 8, 16 )
@@ -38,7 +39,12 @@ shape = SubResource( 2 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
+[node name="Statusbar" parent="CanvasLayer" instance=ExtResource( 3 )]
+margin_right = 0.0
+margin_bottom = 0.0
+
 [node name="Control" type="Control" parent="CanvasLayer"]
+visible = false
 margin_right = 40.0
 margin_bottom = 40.0
 

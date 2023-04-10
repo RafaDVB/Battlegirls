@@ -100,9 +100,7 @@ func _physics_process(delta):
 
 	if is_on_floor():
 		canJump = true
-		gravity = 0
-		if get_floor_normal() == Vector2.UP:
-			motion.y = 0
+		motion.y = 0
 		snap = Vector2.DOWN * 6
 		if jumpPressed:
 			if passThrough:
@@ -114,7 +112,6 @@ func _physics_process(delta):
 				motion.y -= JUMPSPD
 	else:
 		coyote_time()
-		gravity = GRAVITY
 		if get_input().y == 0 and motion.y < -JUMPSPD * .5:
 			motion.y = -JUMPSPD * .5
 	

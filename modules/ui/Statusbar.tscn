@@ -1,0 +1,63 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://modules/ui/scripts/Statusbar.gd" type="Script" id=1]
+[ext_resource path="res://assets/graphics/ui/healthbar/life_empty_c.png" type="Texture" id=2]
+[ext_resource path="res://assets/graphics/ui/healthbar/life_full_c.png" type="Texture" id=3]
+[ext_resource path="res://assets/graphics/ui/healthbar/life_back.png" type="Texture" id=4]
+[ext_resource path="res://assets/graphics/ui/healthbar/sugar_empty.png" type="Texture" id=5]
+[ext_resource path="res://assets/graphics/ui/healthbar/sugar_full.png" type="Texture" id=6]
+[ext_resource path="res://assets/graphics/ui/healthbar/life_full_l.png" type="Texture" id=7]
+[ext_resource path="res://assets/graphics/ui/healthbar/life_karen.png" type="Texture" id=8]
+[ext_resource path="res://assets/graphics/ui/healthbar/life_empty_l.png" type="Texture" id=9]
+
+[node name="Statusbar" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -336.0
+margin_bottom = -222.0
+script = ExtResource( 1 )
+
+[node name="Back" type="TextureRect" parent="."]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 4 )
+
+[node name="HealthCircle" type="TextureProgress" parent="."]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 40.0
+margin_bottom = 40.0
+max_value = 40.0
+value = 40.0
+texture_under = ExtResource( 2 )
+texture_progress = ExtResource( 3 )
+fill_mode = 4
+radial_initial_angle = 90.0
+radial_fill_degrees = 270.0
+
+[node name="HealthBar" type="TextureProgress" parent="."]
+margin_left = 24.0
+margin_top = 8.0
+margin_right = 136.0
+margin_bottom = 16.0
+min_value = 40.0
+value = 100.0
+texture_under = ExtResource( 9 )
+texture_progress = ExtResource( 7 )
+
+[node name="Icon" type="TextureRect" parent="."]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 8 )
+
+[node name="SugarBar" type="TextureProgress" parent="."]
+margin_left = 29.0
+margin_top = 17.0
+margin_right = 132.0
+margin_bottom = 25.0
+texture_under = ExtResource( 5 )
+texture_progress = ExtResource( 6 )
