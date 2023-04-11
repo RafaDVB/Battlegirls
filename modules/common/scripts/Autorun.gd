@@ -10,7 +10,7 @@ func _ready():
 func prepare_font(textureResource: String):
 	var font = BitmapFont.new()
 	var texture = load(textureResource)
-	var chars = '!"#$%&' + "'" + '()*+,-./0ABCDEFGHIJKLMNÑO`abcdefghijklmnñ123456789:;<=>?@PQRSTUVWXYZ[\\]^_opqrstuvwxyz{|}~'
+	var chars = '!"#$%&' + "'" + '()*+,-./0ABCDEFGHIJKLMNÑO`abcdefghijklmnñ123456789:;<=>?@PQRSTUVWXYZ[\\]^_opqrstuvwxyz{|}~ '
 	var line = -1
 	font.add_texture(texture)
 	for i in range (0, chars.length()):

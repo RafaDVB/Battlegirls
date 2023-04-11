@@ -3,10 +3,10 @@ extends KinematicBody2D
 # - Movement -
 # Constants
 const GRAVITY: int = 800
-const ACCEL: int = 600
+const ACCEL: int = 450
 const FRIC: int = 20
 const MAXSPD: int = 180
-const JUMPSPD: int = 330
+const JUMPSPD: int = 335
 
 # Variables
 var gravity: int = GRAVITY
@@ -86,6 +86,15 @@ func _process(_delta):
 	animate()
 
 func _physics_process(delta):
+	if Input.is_action_pressed("ui_page_down"):
+		healthCurrent -= 1
+		healthCurrent = clamp(healthCurrent, 0, 100)
+		statusBar.set_health(healthCurrent)
+	if Input.is_action_pressed("ui_page_up"):
+		sugarCurrent += 1
+		sugarCurrent = clamp(sugarCurrent, 0, 100)
+		statusBar.set_sugar(sugarCurrent)
+	
 	# Apply movement according to input
 	if get_input().x == 0:
 		apply_friction(delta)

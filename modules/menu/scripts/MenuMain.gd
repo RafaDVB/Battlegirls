@@ -2,9 +2,21 @@ extends Node2D
 
 # Buttons
 onready var buttonStart = $UI/VBoxContainer/ButtonStart
+onready var buttonSelect = $UI/VBoxContainer/ButtonSelect
+onready var buttonOptions = $UI/VBoxContainer/ButtonOptions
+onready var buttonExit = $UI/VBoxContainer/ButtonExit
+
+# Cursors
+var offsetLeft = Vector2(-12, 4)
+var offsetRight = Vector2(4, 4)
+onready var cursorLeft = $UI/CursorLeft
+onready var cursorRight = $UI/CursorRight
 
 func _ready():
 	buttonStart.add_font_override("font", Autorun.yellowBlackFont)
+	buttonSelect.add_font_override("font", Autorun.yellowBlackFont)
+	buttonOptions.add_font_override("font", Autorun.yellowBlackFont)
+	buttonExit.add_font_override("font", Autorun.yellowBlackFont)
 	buttonStart.grab_focus()
 
 func switch_scene(next_scene_path):
@@ -33,3 +45,19 @@ func _on_ButtonOptions_pressed():
 
 func _on_ButtonExit_pressed():
 	get_tree().quit()
+
+func _on_ButtonStart_focus_entered():
+	cursorLeft.rect_global_position = buttonStart.rect_global_position + offsetLeft
+	cursorRight.rect_global_position = buttonStart.rect_global_position + Vector2(8 * buttonStart.text.length(), 0) + offsetRight
+
+func _on_ButtonSelect_focus_entered():
+	cursorLeft.rect_global_position = buttonSelect.rect_global_position + offsetLeft
+	cursorRight.rect_global_position = buttonSelect.rect_global_position + Vector2(8 * buttonSelect.text.length(), 0) + offsetRight
+
+func _on_ButtonOptions_focus_entered():
+	cursorLeft.rect_global_position = buttonOptions.rect_global_position + offsetLeft
+	cursorRight.rect_global_position = buttonOptions.rect_global_position + Vector2(8 * buttonOptions.text.length(), 0) + offsetRight
+
+func _on_ButtonExit_focus_entered():
+	cursorLeft.rect_global_position = buttonExit.rect_global_position + offsetLeft
+	cursorRight.rect_global_position = buttonExit.rect_global_position + Vector2(8 * buttonExit.text.length(), 0) + offsetRight
