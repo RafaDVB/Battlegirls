@@ -1,16 +1,20 @@
 extends Node
 
+var whiteGreenFont: BitmapFont
+var yellowBlackFont: BitmapFont
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	whiteGreenFont = prepare_font("res://assets/graphics/ui/fonts/PixelFontWhiteGreen.png")
+	yellowBlackFont = prepare_font("res://assets/graphics/ui/fonts/PixelFontBG.png")
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func prepare_font(textureResource: String):
+	var font = BitmapFont.new()
+	var texture = load(textureResource)
+	var chars = '!"#$%&' + "'" + '()*+,-./0ABCDEFGHIJKLMNÑO`abcdefghijklmnñ123456789:;<=>?@PQRSTUVWXYZ[\\]^_opqrstuvwxyz{|}~'
+	var line = -1
+	font.add_texture(texture)
+	for i in range (0, chars.length()):
+		if i % 16 == 0:
+			line += 1
+		font.add_char(chars.ord_at(i), 0, Rect2(8 * (i - line * 16), 8 * line, 8, 8), Vector2(0, 0), 8)
+	return font

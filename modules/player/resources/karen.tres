@@ -34,7 +34,7 @@ animations = [ {
 "frames": [ ExtResource( 15 ), ExtResource( 17 ), ExtResource( 18 ), ExtResource( 16 ) ],
 "loop": false,
 "name": "Jab",
-"speed": 14.0
+"speed": 18.0
 }, {
 "frames": [ ExtResource( 13 ) ],
 "loop": true,

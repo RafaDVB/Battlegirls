@@ -4,6 +4,7 @@ extends Node2D
 onready var buttonStart = $UI/VBoxContainer/ButtonStart
 
 func _ready():
+	buttonStart.add_font_override("font", Autorun.yellowBlackFont)
 	buttonStart.grab_focus()
 
 func switch_scene(next_scene_path):

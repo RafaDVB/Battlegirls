@@ -35,6 +35,10 @@ monitorable = false
 position = Vector2( 18, -24 )
 shape = SubResource( 2 )
 
+[node name="CameraTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
 [node name="InputTimer" type="Timer" parent="."]
 
 [node name="UI" type="CanvasLayer" parent="."]
@@ -43,13 +47,12 @@ shape = SubResource( 2 )
 margin_right = 0.0
 margin_bottom = 0.0
 
-[node name="Control" type="Control" parent="UI"]
-visible = false
-margin_right = 40.0
-margin_bottom = 40.0
+[node name="SPEED" type="Label" parent="UI"]
+margin_left = 240.0
+margin_top = 8.0
+margin_right = 280.0
+margin_bottom = 22.0
 
-[node name="Label" type="Label" parent="UI/Control"]
-margin_right = 40.0
-margin_bottom = 14.0
-
+[connection signal="animation_finished" from="Sprite" to="." method="_on_Sprite_animation_finished"]
+[connection signal="timeout" from="CameraTimer" to="." method="_on_CameraTimer_timeout"]
 [connection signal="timeout" from="InputTimer" to="." method="_on_InputTimer_timeout"]

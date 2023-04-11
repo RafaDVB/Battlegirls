@@ -24,6 +24,10 @@ config/name="Battlegirls"
 run/main_scene="res://modules/game/Game.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Autorun="*res://modules/common/scripts/Autorun.gd"
+
 [display]
 
 window/size/width=640

@@ -3,10 +3,10 @@ extends KinematicBody2D
 # - Movement -
 # Constants
 const GRAVITY: int = 800
-const ACCEL:int = 600
-const FRIC:int = 20
-const MAXSPD:int = 180
-const JUMPSPD:int = 320
+const ACCEL: int = 600
+const FRIC: int = 20
+const MAXSPD: int = 180
+const JUMPSPD: int = 330
 
 # Variables
 var gravity: int = GRAVITY
@@ -14,7 +14,7 @@ var speed: float = 0
 var direction: int = 1
 var canJump: bool = true
 var jumpPressed: bool = false
-var passThrough:bool = false
+var passThrough: bool = false
 var motion := Vector2.ZERO
 var normal := Vector2.UP
 var snap := Vector2.ZERO
@@ -31,16 +31,24 @@ enum{
 	SPECIAL3,
 }
 var animation = IDLE
+var isPeeking: bool = false
 
 # Nodes
 onready var sprite = $Sprite
 onready var camera = $Camera
+onready var cameraTimer = $CameraTimer
 
 # - Action -
 # Variables
+var healthDefault: int = 100
+var healthCurrent: int = 100
+var sugarDefault: int = 0
+var sugarCurrent: int = 0
+var isAttacking: bool = false
 var inputHistory: Array = []
 
 # Nodes
+onready var statusBar = $UI/Statusbar
 onready var inputTimer = $InputTimer
 
 # - Functions -
@@ -51,6 +59,8 @@ func _ready():
 	camera.limit_right = (tilemapRect.end.x) * tilemapCellSize.x
 	camera.limit_bottom = (tilemapRect.end.y) * tilemapCellSize.y
 	sprite.play("Idle")
+	statusBar.set_health(healthCurrent)
+	statusBar.set_sugar(sugarCurrent)
 
 func _input(_event):
 	if Input.is_action_just_pressed("Left"):
@@ -66,37 +76,49 @@ func _input(_event):
 	if Input.is_action_just_pressed("Attack"):
 		log_input("Attack")
 
-func _process(delta):
+func _process(_delta):
 	if direction == 1:
 		sprite.flip_h = false
 	else:
 		sprite.flip_h = true
-	$UI/Control/Label.text = str(jumpPressed) + "\n" + str(motion.y)
+	$UI/SPEED.add_font_override("font", Autorun.yellowBlackFont)
+	$UI/SPEED.text = "Pre-Alpha"
 	animate()
 
 func _physics_process(delta):
 	# Apply movement according to input
 	if get_input().x == 0:
 		apply_friction(delta)
-		if is_on_floor():
+		if is_on_floor() and not isAttacking:
 			animation = IDLE
 	else:
+		if is_on_floor() and not isAttacking:
+			animation = RUN
 		direction = get_input().x
 		apply_acceleration(get_input().x, delta)
-		if is_on_floor():
-			animation = RUN
 
 	if Input.is_action_just_pressed("Attack"):
 		attack()
+		motion.x += direction * 4 * delta
 
-	if Input.is_action_pressed("Up"):
-		camera.offset.y = lerp(camera.offset.y, -50, delta * 2)
-	elif Input.is_action_pressed("Down"):
-		camera.offset.y = lerp(camera.offset.y, 50, delta * 2)
+	if Input.is_action_just_pressed("Up") or Input.is_action_just_pressed("Down"):
+		cameraTimer.start()
+		
+	if not (Input.is_action_pressed("Up") or Input.is_action_pressed("Down")):
+		cameraTimer.stop()
+		isPeeking = false
+		
+	if isPeeking:
+		if Input.is_action_pressed("Up"):
+			camera.offset.y = lerp(camera.offset.y, -30, delta * 2)
+		elif Input.is_action_pressed("Down"):
+			camera.offset.y = lerp(camera.offset.y, 60, delta * 2)
 	else:
 		camera.offset.y = lerp(camera.offset.y, 0, delta * 2)
 
 	passThrough = Input.is_action_pressed("Down")
+
+	apply_gravity(delta)
 
 	if is_on_floor():
 		canJump = true
@@ -106,11 +128,12 @@ func _physics_process(delta):
 			if passThrough:
 				position.y += 1
 			else:
-				motion.y = 0
 				animation = JUMP
 				snap = Vector2.ZERO
 				motion.y -= JUMPSPD
 	else:
+		if motion.y > 0:
+			animation = FALL
 		coyote_time()
 		if get_input().y == 0 and motion.y < -JUMPSPD * .5:
 			motion.y = -JUMPSPD * .5
@@ -120,14 +143,13 @@ func _physics_process(delta):
 		jump_buffer()
 		if canJump:
 			if passThrough:
-				if get_floor_normal() == Vector2.UP:
-					position.y += 1
+				position.y += 1
 			else:
+				animation = JUMP
+				snap = Vector2.ZERO
 				motion.y = -JUMPSPD
 
-	apply_gravity(delta)
-
-	motion = move_and_slide_with_snap(motion, snap, Vector2.UP, true)
+	motion = move_and_slide_with_snap(motion, snap, Vector2.UP, true, 4, deg2rad(46))
 
 # Returns a vector with the strength of the input
 func get_input():
@@ -152,7 +174,10 @@ func apply_acceleration(dir, delta):
 	motion.x = clamp(motion.x, -MAXSPD, MAXSPD)
 
 func attack():
+	isAttacking = true
 	match inputHistory:
+		["Attack"], ["Attack", "Attack"]:
+			animation = ATTACK
 		["Attack", "Attack", "Attack"]:
 			print("Jab + One Two")
 			inputHistory.clear()
@@ -165,6 +190,7 @@ func attack():
 		["Down", "Left", "Attack"], ["Down", "Right", "Attack"]:
 			print("Uppercut")
 			inputHistory.clear()
+		
 
 func animate():
 	match animation:
@@ -173,12 +199,15 @@ func animate():
 			sprite.speed_scale = 1
 		RUN:
 			sprite.play("Run")
-			sprite.speed_scale = abs(motion.x / 180)
+			sprite.speed_scale = clamp(abs(motion.x / 180), 0.75, 1)
 		JUMP:
 			sprite.play("Jump")
 			sprite.speed_scale = 1
 		FALL:
 			sprite.play("Fall")
+			sprite.speed_scale = 1
+		ATTACK:
+			sprite.play("Jab")
 			sprite.speed_scale = 1
 
 func coyote_time():
@@ -199,3 +228,10 @@ func log_input(event: String):
 
 func _on_InputTimer_timeout():
 	inputHistory.clear()
+
+func _on_Sprite_animation_finished():
+	if isAttacking:
+		isAttacking = false
+
+func _on_CameraTimer_timeout():
+	isPeeking = true
