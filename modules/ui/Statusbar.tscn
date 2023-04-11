@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://modules/ui/scripts/Statusbar.gd" type="Script" id=1]
 [ext_resource path="res://assets/graphics/ui/healthbar/life_empty_c.png" type="Texture" id=2]
@@ -9,6 +9,13 @@
 [ext_resource path="res://assets/graphics/ui/healthbar/life_full_l.png" type="Texture" id=7]
 [ext_resource path="res://assets/graphics/ui/healthbar/life_karen.png" type="Texture" id=8]
 [ext_resource path="res://assets/graphics/ui/healthbar/life_empty_l.png" type="Texture" id=9]
+[ext_resource path="res://modules/ui/resources/fullsugar.tres" type="Shader" id=10]
+
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 10 )
+shader_param/strength = 0.5
+shader_param/speed = 0.5
+shader_param/angle = 0.0
 
 [node name="Statusbar" type="Control"]
 anchor_right = 1.0
@@ -55,9 +62,11 @@ margin_bottom = 40.0
 texture = ExtResource( 8 )
 
 [node name="SugarBar" type="TextureProgress" parent="."]
+material = SubResource( 1 )
 margin_left = 29.0
 margin_top = 17.0
 margin_right = 132.0
 margin_bottom = 25.0
+value = 100.0
 texture_under = ExtResource( 5 )
 texture_progress = ExtResource( 6 )

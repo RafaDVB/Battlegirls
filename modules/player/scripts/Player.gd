@@ -71,7 +71,7 @@ func _process(delta):
 		sprite.flip_h = false
 	else:
 		sprite.flip_h = true
-	$CanvasLayer/Control/Label.text = str(jumpPressed) + "\n" + str(motion.y)
+	$UI/Control/Label.text = str(jumpPressed) + "\n" + str(motion.y)
 	animate()
 
 func _physics_process(delta):
